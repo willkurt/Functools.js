@@ -4,7 +4,7 @@
 test1 = [1,2,3,4,5,6]
 
 var isEven = function(x){return  x % 2 === 0};
-
+var subtract = function(a,b){return a - b};
 
 /*
  from http://www.joelonsoftware.com/items/2006/08/01.html 

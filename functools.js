@@ -63,12 +63,38 @@ FUNCTOOLS.filter = function(test,xs){
 };
 
 
+/*
+FUNCTOOLS.foldl is much more representative of how Haskell and my other fp languages
+implement fold left.  Also in the discussion here: http://lists.racket-lang.org/users/archive/2010-August/041037.html
+*/
 FUNCTOOLS.foldl = function(step, init, xs){
     return(
 	FUNCTOOLS.empty(xs) ? init:
-	    FUNCTOOLS.foldl(step, step(FUNCTOOLS.first(xs),init),FUNCTOOLS.rest(xs))
+	    FUNCTOOLS.foldl(step, step(init, FUNCTOOLS.first(xs)),FUNCTOOLS.rest(xs))
     );
-}
+};
+
+
+
+/*
+NOTE: fold left is not consistently definied between all functional languages
+Haskell defines it quite differently (and it behaves different) than the one below.
+
+FUNCTOOLS.fold_left is based on the Racket implementation of foldl
+see discussion here for more info: http://lists.racket-lang.org/users/archive/2010-August/041037.html
+
+*/
+FUNCTOOLS.fold_left = function(step, init, xs){
+    return(
+	FUNCTOOLS.empty(xs) ? init:
+	    FUNCTOOLS.fold_left(step, step(FUNCTOOLS.first(xs),init),FUNCTOOLS.rest(xs))
+    );
+};
+
+
+
+
+
 
 /* some functions on lists
    zip, flatten, length, reverse
