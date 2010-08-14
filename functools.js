@@ -100,10 +100,25 @@ FUNCTOOLS.foldr = function(step, init, xs){
     );
 };
 
+/*
+  FUNCTOOLS.rargs reverses the order of arguments for a binary function
+  this is not a traiditional function but it's actually quite useful when combined 
+  with functions like foldl.  It shows the power of first class functions, lambdas, and closures.
+*/
+FUNCTOOLS.rargs = function(func){
+    return function(b,a){
+	return func(a,b);
+    }
+}
+
+/*compose is simple but powerful and useful*/
+FUNCTOOLS.compose = function(g,f){return function(x){return g(f(x))}};
 
 
 /* some functions on lists
-   zip, flatten, length, reverse
+   for educational reasons when possible these have been composed
+   with the most reasonable higher order functions
+   zip, flatten, length, reverse, last
 
 */
 
@@ -111,5 +126,17 @@ FUNCTOOLS.foldr = function(step, init, xs){
 FUNCTOOLS.length = function(xs){
     return(
 	FUNCTOOLS.empty(xs) ? 0 :
-	1 + FUNCTOOLS.length(FUNCTOOLS.rest(xs)));  
+	1 + FUNCTOOLS.length(FUNCTOOLS.rest(xs)))  
 };
+
+/* this version of reverse makes use of 2 of our other abstraction, foldl and rargs*/
+
+FUNCTOOLS.reverse = function(xs){
+    return FUNCTOOLS.foldl(FUNCTOOLS.rargs(FUNCTOOLS.build),[],xs)
+};
+
+/* what is the last item in a list? well it's the first item of the reverse
+   of the list
+*/
+
+FUNCTOOLS.last = FUNCTOOLS.compose(FUNCTOOLS.first,FUNCTOOLS.reverse);
