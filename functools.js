@@ -65,7 +65,7 @@ FUNCTOOLS.filter = function(test,xs){
 
 /*
 FUNCTOOLS.foldl is much more representative of how Haskell and my other fp languages
-implement fold left.  Also in the discussion here: http://lists.racket-lang.org/users/archive/2010-August/041037.html
+implement fold left.  Also in the discussion here: http://lists.racket-lang.org/users/archive/2010-August/041037.html  Matthias Felleisen (co-author of Little/Seasoned Schemer) backs up this version, so I'm going to stick with it ;)
 */
 FUNCTOOLS.foldl = function(step, init, xs){
     return(
@@ -92,7 +92,13 @@ FUNCTOOLS.fold_left = function(step, init, xs){
 };
 
 
-
+/*thankfully foldr is less complicated ;) */
+FUNCTOOLS.foldr = function(step, init, xs){
+    return(
+	FUNCTOOLS.empty(xs) ? init:
+	    step(FUNCTOOLS.first(xs),FUNCTOOLS.foldr(step, init, FUNCTOOLS.rest(xs)))
+    );
+};
 
 
 
