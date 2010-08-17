@@ -112,7 +112,9 @@ FUNCTOOLS.rargs = function(func){
 }
 
 /*compose is simple but powerful and useful*/
-FUNCTOOLS.compose = function(g,f){return function(x){return g(f(x))}};
+FUNCTOOLS.compose = function(g,f){
+    return function(x){return g(f(x))};
+};
 
 
 /* some functions on lists
@@ -126,13 +128,14 @@ FUNCTOOLS.compose = function(g,f){return function(x){return g(f(x))}};
 FUNCTOOLS.length = function(xs){
     return(
 	FUNCTOOLS.empty(xs) ? 0 :
-	1 + FUNCTOOLS.length(FUNCTOOLS.rest(xs)))  
+	1 + FUNCTOOLS.length(FUNCTOOLS.rest(xs))
+    );  
 };
 
 /* this version of reverse makes use of 2 of our other abstraction, foldl and rargs*/
 
 FUNCTOOLS.reverse = function(xs){
-    return FUNCTOOLS.foldl(FUNCTOOLS.rargs(FUNCTOOLS.build),[],xs)
+    return FUNCTOOLS.foldl(FUNCTOOLS.rargs(FUNCTOOLS.build),[],xs);
 };
 
 /* what is the last item in a list? well it's the first item of the reverse
