@@ -108,12 +108,14 @@ FUNCTOOLS.foldr = function(step, init, xs){
 FUNCTOOLS.rargs = function(func){
     return function(b,a){
 	return func(a,b);
-    }
-}
+    };
+};
 
 /*compose is simple but powerful and useful*/
 FUNCTOOLS.compose = function(g,f){
-    return function(x){return g(f(x))};
+    return function(x){
+	return g(f(x));
+    };
 };
 
 
