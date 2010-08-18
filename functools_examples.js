@@ -20,7 +20,7 @@ function spolsky_map(fn, a)
         {
             a[i] = fn(a[i]);
         }
-    }
+    };
     
 function spolsky_reduce(fn, a, init)
     {
@@ -28,4 +28,28 @@ function spolsky_reduce(fn, a, init)
         for (i = 0; i < a.length; i++)
             s = fn( s, a[i] );
         return s;
-    }
+    };
+
+
+
+/*playing around*/
+var linear_combination = function(a,b,x,y){
+    return(
+	(a*x)+(b*x)
+    );
+};
+
+
+
+
+/*how lets and wheres work*/
+
+var add_doubles = function(a,b){
+    return(function(double_a,double_b){
+	return(double_a+double_b)
+    })(a*2,
+       b*2)
+    };
+
+
+
