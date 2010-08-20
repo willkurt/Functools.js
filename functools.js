@@ -47,7 +47,7 @@ FUNCTOOLS.empty = function (xs) {
 */
 
 FUNCTOOLS.map = function (func,xs) {
-    return(
+    return (
 	FUNCTOOLS.empty(xs) ? [] :
 	FUNCTOOLS.build(func(FUNCTOOLS.first(xs)),
 			FUNCTOOLS.map(func,FUNCTOOLS.rest(xs))));
@@ -56,7 +56,7 @@ FUNCTOOLS.map = function (func,xs) {
 
 
 FUNCTOOLS.filter = function (test,xs) {
-    return(
+    return (
 	FUNCTOOLS.empty(xs) ? []:
 	    test(FUNCTOOLS.first(xs)) ? FUNCTOOLS.build(FUNCTOOLS.first(xs),FUNCTOOLS.filter(test,FUNCTOOLS.rest(xs))) :
 		FUNCTOOLS.filter(test,FUNCTOOLS.rest(xs)));	
@@ -85,7 +85,7 @@ see discussion here for more info: http://lists.racket-lang.org/users/archive/20
 
 */
 FUNCTOOLS.fold_left = function (step, init, xs) {
-    return(
+    return (
 	FUNCTOOLS.empty(xs) ? init:
 	    FUNCTOOLS.fold_left(step, step(FUNCTOOLS.first(xs),init),FUNCTOOLS.rest(xs))
     );
@@ -94,7 +94,7 @@ FUNCTOOLS.fold_left = function (step, init, xs) {
 
 /*thankfully foldr is less complicated ;) */
 FUNCTOOLS.foldr = function (step, init, xs) { 
-    return(
+    return (
 	FUNCTOOLS.empty(xs) ? init:
 	    step(FUNCTOOLS.first(xs),FUNCTOOLS.foldr(step, init, FUNCTOOLS.rest(xs)))
     );
@@ -105,7 +105,7 @@ FUNCTOOLS.foldr = function (step, init, xs) {
   this is not a traiditional function but it's actually quite useful when combined 
   with functions like foldl.  It shows the power of first class functions, lambdas, and closures.
 */
-FUNCTOOLS.rargs = function (func) {
+FUNCTOOLS.flip = function (func) {
     return function(b,a){
 	return func(a,b);
     };
@@ -128,7 +128,7 @@ FUNCTOOLS.compose = function (g,f) {
 
 
 FUNCTOOLS.length = function (xs) {
-    return(
+    return (
 	FUNCTOOLS.empty(xs) ? 0 :
 	1 + FUNCTOOLS.length(FUNCTOOLS.rest(xs))
     );  
