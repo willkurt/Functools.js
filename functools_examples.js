@@ -53,3 +53,6 @@ var add_doubles = function(a,b){
 
 
 
+var add_three = function(a,b,c){
+    return a+b+c;
+};

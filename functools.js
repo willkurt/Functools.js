@@ -119,12 +119,36 @@ FUNCTOOLS.compose = function (g,f) {
 };
 
 
+FUNCTOOLS.curry = function (f,a) {
+    return(
+	function(){
+	    return(
+		(function(args){
+		    return f.apply(this, build(a,args));
+		})(/*args =*/ Array.prototype.slice.call(arguments))
+	    );
+	}
+    );
+};
+
+/*currying of one argument, original not purely functional version much more legable*/
+FUNCTOOLS.curry1 = function (f,a) {
+    return(
+	function(){
+	    var args = Array.prototype.slice.call(arguments); 
+	    args.unshift(a);
+	    return f.apply(this, args);
+	}
+    );
+};
+
 /* some functions on lists
    for educational reasons when possible these have been composed
    with the most reasonable higher order functions
    zip, flatten, length, reverse, last
 
 */
+
 
 
 FUNCTOOLS.length = function (xs) {

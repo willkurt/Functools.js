@@ -23,4 +23,5 @@ var filter = FUNCTOOLS.filter;
 var flip = FUNCTOOLS.flip;
 var reverse = FUNCTOOLS.reverse;
 var compose = FUNCTOOLS.compose;
-var last = FUNCTOOLS.last
+var last = FUNCTOOLS.last;
+var curry = FUNCTOOLS.curry;
