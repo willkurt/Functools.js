@@ -8,6 +8,36 @@
 */
 
 
+/* Functional programming in JavaScript templates
+
+   This are templates to deal with the fact that we just don't have
+   macros in javascript   standard function
+   
+
+
+*/
+//NAMESPACE.general_function = function(){
+//    return(
+//	//function body goes here
+//    );
+//};
+
+
+//NAMESPACE.where_function = function(){
+//    return(
+//	(function(arg1,arg2,arg3){
+//	    //function body goes here
+//	};) (/*where*/
+//	    /*arg1 is*/ /*<arg1 code>*/,
+//	    /*arg2 is*/ /*<arg2 code>*/,
+//	    /*arg3 is*/ /*<arg3 code>*/);
+//
+//    );
+//};
+
+
+
+
 var FUNCTOOLS = {};
 
 /*
@@ -39,7 +69,9 @@ FUNCTOOLS.empty = function (xs) {
 };
 
 
-
+FUNCTOOLS.isList = function (xs) {
+    return (xs instanceof Array);
+};
 
 /* Higher-order functions
    should include: map, foldl, foldr, filter, curry
@@ -118,8 +150,25 @@ FUNCTOOLS.compose = function (g,f) {
     };
 };
 
+/*this version will curry any number of arguments
+also it's purely functional*/
 
-FUNCTOOLS.curry = function (f,a) {
+FUNCTOOLS.curry = function(){
+    return((function(arg_array,func,arg1){
+	return(
+	    arg_array.length === 2 ? FUNCTOOLS.curry_one(func,arg1) :
+		FUNCTOOLS.curry.apply(FUNCTOOLS,FUNCTOOLS.build(
+		    FUNCTOOLS.curry(func,arg1),
+		    FUNCTOOLS.cddr(arg_array)))
+		);
+    })(/*where*/
+	/*arg_array is*/Array.prototype.slice.call(arguments),
+	/*func is*/arguments[0],
+	/*arg1 is*/arguments[1]));
+};
+
+//curries just one argument
+FUNCTOOLS.curry_one = function (f,a) {
     return(
 	function(){
 	    return(
@@ -164,8 +213,26 @@ FUNCTOOLS.reverse = function (xs) {
     return FUNCTOOLS.foldl(FUNCTOOLS.rargs(FUNCTOOLS.build),[],xs);
 };
 
+
+
 /* what is the last item in a list? well it's the first item of the reverse
    of the list
 */
+FUNCTOOLS.last_compose = FUNCTOOLS.compose(FUNCTOOLS.first,FUNCTOOLS.reverse);
 
-FUNCTOOLS.last = FUNCTOOLS.compose(FUNCTOOLS.first,FUNCTOOLS.reverse);
+//this version is faster and more practical
+FUNCTOOLS.last = function(xs){
+    return(
+	empty(FUNCTOOLS.rest(xs)) ? FUNCTOOLS.first(xs) :
+	    FUNCTOOLS.last(FUNCTOOLS.rest(xs))
+    );
+};
+
+FUNCTOOLS.allButLast = function(xs){
+    return(
+    empty(FUNCTOOLS.rest(xs)) ? [] :
+	    FUNCTOOLS.build(FUNCTOOLS.first(xs),FUNCTOOLS.allButLast(FUNCTOOLS.rest(xs)))
+    );
+};
+	   
+	   FUNCTOOLS.cddr = FUNCTOOLS.compose(FUNCTOOLS.rest, FUNCTOOLS.rest);

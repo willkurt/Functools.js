@@ -25,3 +25,6 @@ var reverse = FUNCTOOLS.reverse;
 var compose = FUNCTOOLS.compose;
 var last = FUNCTOOLS.last;
 var curry = FUNCTOOLS.curry;
+var flength = FUNCTOOLS.length;
+var isList = FUNCTOOLS.isList;
+var flatten = FUNCTOOLS.flatten;

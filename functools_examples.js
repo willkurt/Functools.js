@@ -56,3 +56,48 @@ var add_doubles = function(a,b){
 var add_three = function(a,b,c){
     return a+b+c;
 };
+
+
+
+var makeAdder = function(val){
+    return(
+	function(x){
+	    return val+x;
+	    }
+    );
+};
+
+var add = function(x,y){
+    return x+y;
+};
+
+var sum = function (xs) {
+    return foldl(add,0,xs);
+};
+
+var square = function(x){
+    return x*x;
+};
+
+var mean = function (xs){
+    return(sum(xs)/flength(xs));
+};
+
+var deviations = function (xs) {
+    var m = mean(xs);//we can remove this if we wanted
+    return  map(function(x){return x-m;},xs);
+};
+
+var squareDeviations = function(xs){
+    return  map(square,deviations(xs));
+};
+
+var sumSqDeviations = compose(sum,squareDeviations);
+
+var sd = function(xs){
+    return  Math.sqrt( (sumSqDeviations(xs)/(flength(xs)-1)));
+};
+
+var list3 = function(a,b,c){
+    return [a,b,c];
+};
