@@ -12,9 +12,6 @@
 
    This are templates to deal with the fact that we just don't have
    macros in javascript   standard function
-   
-
-
 */
 //NAMESPACE.general_function = function(){
 //    return(
@@ -133,7 +130,7 @@ FUNCTOOLS.foldr = function (step, init, xs) {
 };
 
 /*
-  FUNCTOOLS.rargs reverses the order of arguments for a binary function
+  FUNCTOOLS.flip reverses the order of arguments for a binary function
   this is not a traiditional function but it's actually quite useful when combined 
   with functions like foldl.  It shows the power of first class functions, lambdas, and closures.
 */
@@ -151,7 +148,7 @@ FUNCTOOLS.compose = function (g,f) {
 };
 
 /*this version will curry any number of arguments
-also it's purely functional*/
+also it's purely functional, well maybe not the array.prototype etc, and the lenght call*/
 
 FUNCTOOLS.curry = function(){
     return((function(arg_array,func,arg1){
@@ -173,7 +170,7 @@ FUNCTOOLS.curry_one = function (f,a) {
 	function(){
 	    return(
 		(function(args){
-		    return f.apply(this, build(a,args));
+		    return f.apply(FUNCTOOLS, build(a,args));
 		})(/*args =*/ Array.prototype.slice.call(arguments))
 	    );
 	}
