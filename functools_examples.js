@@ -101,3 +101,9 @@ var sd = function(xs){
 var list3 = function(a,b,c){
     return [a,b,c];
 };
+
+var test = 'tick'
+
+var testing = function(a,b,c){
+    test = a+b+c;
+};

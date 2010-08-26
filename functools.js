@@ -148,7 +148,8 @@ FUNCTOOLS.compose = function (g,f) {
 };
 
 /*this version will curry any number of arguments
-also it's purely functional, well maybe not the array.prototype etc, and the lenght call*/
+also it's purely functional, well maybe not the array.prototype etc, and the lenght call
+*/
 
 FUNCTOOLS.curry = function(){
     return((function(arg_array,func,arg1){
@@ -232,4 +233,4 @@ FUNCTOOLS.allButLast = function(xs){
     );
 };
 	   
-	   FUNCTOOLS.cddr = FUNCTOOLS.compose(FUNCTOOLS.rest, FUNCTOOLS.rest);
+FUNCTOOLS.cddr = FUNCTOOLS.compose(FUNCTOOLS.rest, FUNCTOOLS.rest);
