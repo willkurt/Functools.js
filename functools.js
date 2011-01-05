@@ -35,7 +35,7 @@
 
 
 
-var FUNCTOOLS = {};
+var Functools = {};
 
 /*
   primatives:
@@ -45,28 +45,28 @@ var FUNCTOOLS = {};
 */
 
 //car
-FUNCTOOLS.first = function (xs) {
+Functools.first = function (xs) {
     return xs[0];
 };
 
 
 //cdr
-FUNCTOOLS.rest = function (xs) {
+Functools.rest = function (xs) {
     return xs.slice(1);
 };
 
 //cons
-FUNCTOOLS.build = function (x,xs) {
+Functools.build = function (x,xs) {
     return [x].concat(xs);
 };
 
 //nil?
-FUNCTOOLS.empty = function (xs) {
+Functools.empty = function (xs) {
     return xs.length === 0;
 };
 
 
-FUNCTOOLS.isList = function (xs) {
+Functools.isList = function (xs) {
     return (xs instanceof Array);
 };
 
@@ -75,31 +75,31 @@ FUNCTOOLS.isList = function (xs) {
 
 */
 
-FUNCTOOLS.map = function (func,xs) {
+Functools.map = function (func,xs) {
     return (
-	FUNCTOOLS.empty(xs) ? [] :
-	FUNCTOOLS.build(func(FUNCTOOLS.first(xs)),
-			FUNCTOOLS.map(func,FUNCTOOLS.rest(xs))));
+	Functools.empty(xs) ? [] :
+	Functools.build(func(Functools.first(xs)),
+			Functools.map(func,Functools.rest(xs))));
 	
 };
 
 
-FUNCTOOLS.filter = function (test,xs) {
+Functools.filter = function (test,xs) {
     return (
-	FUNCTOOLS.empty(xs) ? []:
-	    test(FUNCTOOLS.first(xs)) ? FUNCTOOLS.build(FUNCTOOLS.first(xs),FUNCTOOLS.filter(test,FUNCTOOLS.rest(xs))) :
-		FUNCTOOLS.filter(test,FUNCTOOLS.rest(xs)));	
+	Functools.empty(xs) ? []:
+	    test(Functools.first(xs)) ? Functools.build(Functools.first(xs),Functools.filter(test,Functools.rest(xs))) :
+		Functools.filter(test,Functools.rest(xs)));	
 };
 
 
 /*
-FUNCTOOLS.foldl is much more representative of how Haskell and my other fp languages
+Functools.foldl is much more representative of how Haskell and my other fp languages
 implement fold left.  Also in the discussion here: http://lists.racket-lang.org/users/archive/2010-August/041037.html  Matthias Felleisen (co-author of Little/Seasoned Schemer) backs up this version, so I'm going to stick with it ;)
 */
-FUNCTOOLS.foldl = function (step, init, xs) {
+Functools.foldl = function (step, init, xs) {
     return(
-	FUNCTOOLS.empty(xs) ? init:
-	    FUNCTOOLS.foldl(step, step(init, FUNCTOOLS.first(xs)),FUNCTOOLS.rest(xs))
+	Functools.empty(xs) ? init:
+	    Functools.foldl(step, step(init, Functools.first(xs)),Functools.rest(xs))
     );
 };
 
@@ -109,39 +109,39 @@ FUNCTOOLS.foldl = function (step, init, xs) {
 NOTE: fold left is not consistently definied between all functional languages
 Haskell defines it quite differently (and it behaves different) than the one below.
 
-FUNCTOOLS.fold_left is based on the Racket implementation of foldl
+Functools.fold_left is based on the Racket implementation of foldl
 see discussion here for more info: http://lists.racket-lang.org/users/archive/2010-August/041037.html
 
 */
-FUNCTOOLS.fold_left = function (step, init, xs) {
+Functools.fold_left = function (step, init, xs) {
     return (
-	FUNCTOOLS.empty(xs) ? init:
-	    FUNCTOOLS.fold_left(step, step(FUNCTOOLS.first(xs),init),FUNCTOOLS.rest(xs))
+	Functools.empty(xs) ? init:
+	    Functools.fold_left(step, step(Functools.first(xs),init),Functools.rest(xs))
     );
 };
 
 
 /*thankfully foldr is less complicated ;) */
-FUNCTOOLS.foldr = function (step, init, xs) { 
+Functools.foldr = function (step, init, xs) { 
     return (
-	FUNCTOOLS.empty(xs) ? init:
-	    step(FUNCTOOLS.first(xs),FUNCTOOLS.foldr(step, init, FUNCTOOLS.rest(xs)))
+	Functools.empty(xs) ? init:
+	    step(Functools.first(xs),Functools.foldr(step, init, Functools.rest(xs)))
     );
 };
 
 /*
-  FUNCTOOLS.flip reverses the order of arguments for a binary function
+  Functools.flip reverses the order of arguments for a binary function
   this is not a traiditional function but it's actually quite useful when combined 
   with functions like foldl.  It shows the power of first class functions, lambdas, and closures.
 */
-FUNCTOOLS.flip = function (func) {
+Functools.flip = function (func) {
     return function(b,a){
 	return func(a,b);
     };
 };
 
 /*compose is simple but powerful and useful*/
-FUNCTOOLS.compose = function (g,f) {
+Functools.compose = function (g,f) {
     return function(x){
 	return g(f(x));
     };
@@ -151,13 +151,13 @@ FUNCTOOLS.compose = function (g,f) {
 also it's purely functional, well maybe not the array.prototype etc, and the lenght call
 */
 
-FUNCTOOLS.curry = function(){
+Functools.curry = function(){
     return((function(arg_array,func,arg1){
 	return(
-	    arg_array.length === 2 ? FUNCTOOLS.curry_one(func,arg1) :
-		FUNCTOOLS.curry.apply(FUNCTOOLS,FUNCTOOLS.build(
-		    FUNCTOOLS.curry(func,arg1),
-		    FUNCTOOLS.cddr(arg_array)))
+	    arg_array.length === 2 ? Functools.curry_one(func,arg1) :
+		Functools.curry.apply(Functools,Functools.build(
+		    Functools.curry(func,arg1),
+		    Functools.cddr(arg_array)))
 		);
     })(/*where*/
 	/*arg_array is*/Array.prototype.slice.call(arguments),
@@ -166,12 +166,12 @@ FUNCTOOLS.curry = function(){
 };
 
 //curries just one argument
-FUNCTOOLS.curry_one = function (f,a) {
+Functools.curry_one = function (f,a) {
     return(
 	function(){
 	    return(
 		(function(args){
-		    return f.apply(FUNCTOOLS, build(a,args));
+		    return f.apply(Functools, build(a,args));
 		})(/*args =*/ Array.prototype.slice.call(arguments))
 	    );
 	}
@@ -179,7 +179,7 @@ FUNCTOOLS.curry_one = function (f,a) {
 };
 
 /*currying of one argument, original not purely functional version much more legable*/
-FUNCTOOLS.curry1 = function (f,a) {
+Functools.curry1 = function (f,a) {
     return(
 	function(){
 	    var args = Array.prototype.slice.call(arguments); 
@@ -198,17 +198,17 @@ FUNCTOOLS.curry1 = function (f,a) {
 
 
 
-FUNCTOOLS.length = function (xs) {
+Functools.length = function (xs) {
     return (
-	FUNCTOOLS.empty(xs) ? 0 :
-	1 + FUNCTOOLS.length(FUNCTOOLS.rest(xs))
+	Functools.empty(xs) ? 0 :
+	1 + Functools.length(Functools.rest(xs))
     );  
 };
 
-/* this version of reverse makes use of 2 of our other abstraction, foldl and rargs*/
+/* this version of reverse makes use of 2 of our other abstraction, foldl and flips*/
 
-FUNCTOOLS.reverse = function (xs) {
-    return FUNCTOOLS.foldl(FUNCTOOLS.rargs(FUNCTOOLS.build),[],xs);
+Functools.reverse = function (xs) {
+    return Functools.foldl(Functools.flip(Functools.build),[],xs);
 };
 
 
@@ -216,21 +216,23 @@ FUNCTOOLS.reverse = function (xs) {
 /* what is the last item in a list? well it's the first item of the reverse
    of the list
 */
-FUNCTOOLS.last_compose = FUNCTOOLS.compose(FUNCTOOLS.first,FUNCTOOLS.reverse);
+Functools.last_compose = Functools.compose(Functools.first,Functools.reverse);
 
 //this version is faster and more practical
-FUNCTOOLS.last = function(xs){
+Functools.last = function(xs){
     return(
-	empty(FUNCTOOLS.rest(xs)) ? FUNCTOOLS.first(xs) :
-	    FUNCTOOLS.last(FUNCTOOLS.rest(xs))
+	empty(Functools.rest(xs)) ? Functools.first(xs) :
+	    Functools.last(Functools.rest(xs))
     );
 };
 
-FUNCTOOLS.allButLast = function(xs){
+Functools.allButLast = function(xs){
     return(
-    empty(FUNCTOOLS.rest(xs)) ? [] :
-	    FUNCTOOLS.build(FUNCTOOLS.first(xs),FUNCTOOLS.allButLast(FUNCTOOLS.rest(xs)))
+    empty(Functools.rest(xs)) ? [] :
+	    Functools.build(Functools.first(xs),Functools.allButLast(Functools.rest(xs)))
     );
 };
 	   
-FUNCTOOLS.cddr = FUNCTOOLS.compose(FUNCTOOLS.rest, FUNCTOOLS.rest);
+Functools.cddr = Functools.compose(Functools.rest, Fpunctools.rest);
+Functools.cadr = Functools.compose(Functools.first, Functools.rest);
+

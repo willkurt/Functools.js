@@ -22,11 +22,12 @@ function spolsky_map(fn, a)
         }
     };
     
-function spolsky_reduce(fn, a, init)
+function spolsky_reduce(fn, init, a)
     {
         var s = init;
-        for (i = 0; i < a.length; i++)
+        for (i = 0; i < a.length; i++){
             s = fn( s, a[i] );
+	}
         return s;
     };
 
@@ -106,4 +107,32 @@ var test = 'tick'
 
 var testing = function(a,b,c){
     test = a+b+c;
+};
+
+var long_list = [1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,101,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10];
+
+
+var add2 = curry(add,2);
+
+
+
+
+var time_function = function(func,asize,times){
+    var i = 0;
+    var a = build_random_array(asize);
+    var start = (new Date).getTime();
+    for(i = 0; i<times;i++){
+	func(a);
+    }
+    var end = (new Date).getTime();
+    return end-start;
+};
+
+var build_random_array = function(asize){
+    var a = [];
+    var i = 0;
+    for(i = 0;i<asize;i++){
+	a[i] = Math.floor(Math.random()*11);
+    };
+    return a;
 };
