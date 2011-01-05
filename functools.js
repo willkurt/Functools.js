@@ -1,4 +1,4 @@
-/* Functools.js
+/* functools.js
    basic functional programming tools for JavaScript
 
    The intention of this library is more pedagogical than practical,
@@ -10,9 +10,10 @@
 
 /* Functional programming in JavaScript templates
 
-   This are templates to deal with the fact that we just don't have
-   macros in javascript   standard function
+   These are templates to deal with the fact that we just don't have
+   macros in javascript.
 */
+
 //NAMESPACE.general_function = function(){
 //    return(
 //	//function body goes here
@@ -131,7 +132,7 @@ Functools.foldr = function (step, init, xs) {
 
 /*
   Functools.flip reverses the order of arguments for a binary function
-  this is not a traiditional function but it's actually quite useful when combined 
+  this is not a traditional function but it's actually quite useful when combined 
   with functions like foldl.  It shows the power of first class functions, lambdas, and closures.
 */
 Functools.flip = function (func) {
@@ -148,7 +149,7 @@ Functools.compose = function (g,f) {
 };
 
 /*this version will curry any number of arguments
-also it's purely functional, well maybe not the array.prototype etc, and the lenght call
+also it's purely functional, well maybe not the array.prototype etc, and the length call
 */
 
 Functools.curry = function(){
@@ -178,7 +179,7 @@ Functools.curry_one = function (f,a) {
     );
 };
 
-/*currying of one argument, original not purely functional version much more legable*/
+/*currying of one argument, original, not purely functional version much more legable*/
 Functools.curry1 = function (f,a) {
     return(
 	function(){
@@ -233,6 +234,6 @@ Functools.allButLast = function(xs){
     );
 };
 	   
-Functools.cddr = Functools.compose(Functools.rest, Fpunctools.rest);
+Functools.cddr = Functools.compose(Functools.rest, Functools.rest);
 Functools.cadr = Functools.compose(Functools.first, Functools.rest);
 
