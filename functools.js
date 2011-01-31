@@ -212,6 +212,24 @@ Functools.reverse = function (xs) {
     return Functools.foldl(Functools.flip(Functools.build),[],xs);
 };
 
+/*removeAll 2 different ways*/
+
+/*standard schemer way*/
+Functools.removeAll = function(x,xs){
+    return(
+	Functools.empty(xs) ? [] :
+            (x == Functools.first(xs)) ? Functools.removeAll(x,Functools.rest(xs)) :
+	    build(Functools.first(xs),Functools.removeAll(x,Functools.rest(xs)))
+    );
+};
+
+/* with filter */
+Functools.removeAllf = function(x,xs){
+    return(
+	Functools.filter(function(a){ return (a !== x) },xs)
+    );
+};
+
 
 
 /* what is the last item in a list? well it's the first item of the reverse
